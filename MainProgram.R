@@ -25,8 +25,6 @@ MainProgram <- function(WGDU, winLen, cashBalance, goldBalance, growthRate, cash
       resultTable[(i+1),6] = goldBalance
     }
   }
-  
-  print(cashBalance + (resultTable[nrow(resultTable),2] * goldBalance) )
   #return(cashBalance + (resultTable[nrow(resultTable),2] * goldBalance) )
   return (resultTable)
 }

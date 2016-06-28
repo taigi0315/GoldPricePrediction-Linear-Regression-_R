@@ -3,8 +3,8 @@
 #install_github('quandl/R-package')
 library(devtools)
 library(Quandl)
-WGC_GOLD_DAILY_USD=Quandl("WGC/GOLD_DAILY_USD")
-save(WGC_GOLD_DAILY_USD,file='WGC_GOLD_DAILY_USD.RData')
+#WGC_GOLD_DAILY_USD=Quandl("WGC/GOLD_DAILY_USD")
+#save(WGC_GOLD_DAILY_USD,file='WGC_GOLD_DAILY_USD.RData')
 
 #Calculate prediction 
 GetPrediction <- function(prices, winLen){
@@ -97,11 +97,13 @@ GoldBalanceTracker <- function(goldBalance, buy, sell){
 }
 
 #draw two lines plot
-DrawCompareTable <- function(compareTable){
-  x = c(1:nrow(WGDU))
-  plot( x, compareTable[,1], type="l", col="red" )
+DrawCompareTable <- function(compareTable, winLen){
+  x = c((winLen):nrow(WGDU))
+  plot( x, compareTable[winLen:nrow(compareTable),1], type="l", col="red", xlab = "Date", ylab = "Gold Price")
   par(new=TRUE)
-  plot( x, compareTable[,2], type="l", col="blue" )
+  plot( x, compareTable[(winLen-1):(nrow(compareTable)-1),2], type="l", col="blue", xlab = "Date", ylab = "Gold Price")
+  legend("topright", legend = c("real price", "prediction"), col=c("red", "blue"), cex=.75, lty=1:3)
+  
   dev.copy(jpeg,filename="compareGraph.jpg");
   dev.off ();
 }
